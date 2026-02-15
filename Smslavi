@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemi i Verifikimit</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0a0f1c;
+    color:#00ffcc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+}
+.container{
+    width:90%;
+    max-width:600px;
+}
+h1{
+    color:#00ffff;
+    text-shadow:0 0 15px #00ffff;
+}
+button{
+    padding:12px 25px;
+    background:#00ffff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:20px;
+}
+button:hover{
+    opacity:0.8;
+}
+.progress{
+    width:100%;
+    background:#111;
+    border-radius:20px;
+    margin-top:20px;
+    overflow:hidden;
+    display:none;
+}
+.progress-bar{
+    height:20px;
+    width:0%;
+    background:#00ffcc;
+    transition:width 0.3s;
+}
+.warning{
+    color:red;
+    margin-top:15px;
+    font-weight:bold;
+    display:none;
+}
+.glitch{
+    font-size:32px;
+    color:#ff00ff;
+    animation:glitch 0.3s infinite;
+}
+@keyframes glitch{
+    0%{transform:translate(2px,2px);}
+    25%{transform:translate(-2px,-2px);}
+    50%{transform:translate(2px,-2px);}
+    75%{transform:translate(-2px,2px);}
+    100%{transform:translate(0,0);}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sistemi i Avancuar i Verifikimit të Sigurisë</h1>
+    <p id="description">
+        Po kryhet analizë automatike për sigurinë e sistemit, integritetin e skedarëve,
+        aktivitetin e rrjetit dhe konfigurimin e pajisjes.
+    </p>
+
+    <button onclick="startScan()">Fillo Analizën</button>
+
+    <div class="progress" id="progressBox">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <p id="status"></p>
+    <p class="warning" id="warning">⚠ U zbulua aktivitet i dyshimtë...</p>
+</div>
+
+<script>
+function startScan(){
+    document.querySelector("button").style.display="none";
+    document.getElementById("progressBox").style.display="block";
+    let bar = document.getElementById("progressBar");
+    let status = document.getElementById("status");
+    let warning = document.getElementById("warning");
+
+    let messages = [
+        "Po analizohen lidhjet aktive...",
+        "Po kontrollohen konfigurimet e sistemit...",
+        "Po skanohet memoria...",
+        "Po verifikohet niveli i sigurisë..."
+    ];
+
+    let width = 0;
+    let interval = setInterval(function(){
+        if(width >= 100){
+            clearInterval(interval);
+            showPrank();
+        } else {
+            width++;
+            bar.style.width = width + "%";
+            status.innerText = messages[Math.floor(width/25)] || "";
+            if(width === 70){
+                warning.style.display="block";
+            }
+        }
+    }, 50);
+}
+
+function showPrank(){
+    document.body.innerHTML = `
+        <div style="text-align:center;">
+            <h1 class="glitch"> YOUR STSTEM HAS BAN !</h1>
+            <p style="color:white;">
+                AND YOU DATA IS OPEN .
+            </p>
+            <button onclick="location.reload()">Provo përsëri</button>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
